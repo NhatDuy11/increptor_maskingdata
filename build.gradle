@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id("com.github.johnrengelman.shadow") version "7.1.0"
+
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    jcenter()
+
+    maven {
+        url "https://packages.confluent.io/maven"
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.8.0'
+    implementation group: 'org.apache.avro', name: 'avro', version: '1.11.3'
+    implementation group: 'io.confluent', name: 'kafka-avro-serializer', version: '7.7.1'
+
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
+    jar {
+        manifest {
+            attributes(
+                    'Main-Class': 'com.example.kafka.KafkaProducerWithInterceptor'
+            )
+        }
+    }
