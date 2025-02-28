@@ -17,10 +17,11 @@ public class ProducerTest_v1 {
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
         properties.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, "com.example.kafka.Masking_flex_v1");
-        properties.put("columns.to.mask", "field3");
-        properties.put("replacement.value.field3", "F3");
+        properties.put("columns.to.mask", "field4,field1");
+        properties.put("replacement.value.field4", 6666);
+        properties.put("replacement.value.field1", "Duy");
         properties.put("schema.registry.url", "http://192.168.1.5:8081");
-        String schemaString = "{\"type\":\"record\",\"name\":\"ExampleRecord\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\"},{\"name\":\"IP\",\"type\":\"string\"},{\"name\":\"field3\",\"type\":\"string\"},{\"name\":\"field4\",\"type\":\"string\"}]}";
+        String schemaString = "{\"type\":\"record\",\"name\":\"ExampleRecord\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\"},{\"name\":\"IP\",\"type\":\"string\"},{\"name\":\"field3\",\"type\":\"string\"},{\"name\":\"field4\",\"type\":\"int\"}]}";
         properties.put("value.schema",schemaString);
 
 
@@ -31,9 +32,9 @@ public class ProducerTest_v1 {
         avroRecord.put("field1", "value1");
         avroRecord.put("IP", "192.168.1.5");
         avroRecord.put("field3", "OtherData");
-        avroRecord.put("field4", "32322323232");
+        avroRecord.put("field4", 2222);
 
-        ProducerRecord<String, GenericRecord> record = new ProducerRecord<>("test-topic_avro_ogg", "key1", avroRecord);
+        ProducerRecord<String, GenericRecord> record = new ProducerRecord<>("test-topic_avro_ogg_v1", "key1", avroRecord);
 
         producer.send(record, (metadata, exception) -> {
             if (exception != null) {
