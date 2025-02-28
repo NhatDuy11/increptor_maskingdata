@@ -27,10 +27,8 @@ public class ProducerTest {
         properties.put("value.schema",schemaString);
 
 
-        // Tạo KafkaProducer
         KafkaProducer<String, GenericRecord> producer = new KafkaProducer<>(properties);
 
-        // Tạo GenericRecord từ schema
         Schema schema = new Schema.Parser().parse(schemaString);
         GenericRecord avroRecord = new GenericData.Record(schema);
         avroRecord.put("field1", "value1");
